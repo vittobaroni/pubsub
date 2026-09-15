@@ -1,10 +1,11 @@
 import grpc
 import time
+
 import pubsub_pb2
 import pubsub_pb2_grpc
 
 def iniciar_publicador():
-    # Conecta ao servidor Broker (assumindo que ele usou a porta padrão 50051)
+    # Conecta ao servidor Broker 
     canal = grpc.insecure_channel('localhost:50051')
     
     stub = pubsub_pb2_grpc.PubSubServiceStub(canal)
@@ -14,7 +15,7 @@ def iniciar_publicador():
         {
             "topic": "League_of_Legends",
             "titulo": "Mundial 2026",
-            "conteudo": "Gen-G, T1 e HLE são as confirmadas coreanas para a modalidade."
+            "conteudo": "Gen-G, T1, HLE e DK são as confirmadas coreanas para o mundial deste ano."
         },
         {
             "topic": "Minecraft",
@@ -48,24 +49,23 @@ def iniciar_publicador():
     for noticia in noticias:
         print(f"[Enviando] [{noticia['topic']}] {noticia['titulo']}")
         
-        # Monta a requisição usando o contrato exato do pubsub.proto
+        # montando a requisição do .proto
         requisicao = pubsub_pb2.PublishRequest(
             topic=noticia["topic"],
             titulo=noticia["titulo"],
             conteudo=noticia["conteudo"]
         )
         
-        # Chama a função Publish no servidor
+        # chama a função Publish no servidor
         resposta = stub.Publish(requisicao)
         
-        # Verifica a resposta booleana definida no .proto 
+        # verifica resposta do .proto
         if resposta.success:
             print(" -> Sucesso --> Notícia entregue ao Broker!\n")
         else:
             print(" -> Falha --> O Broker não confirmou o recebimento.\n")
             
-        # Pausa de 4 segundos entre as postagens para simular o envio em tempo real
-        time.sleep(4)
+        time.sleep(2)
 
 if __name__ == '__main__':
     iniciar_publicador()

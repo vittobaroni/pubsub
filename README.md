@@ -4,6 +4,8 @@ Um portal de notícias distribuído em tempo real que implementa o padrão arqui
 
 Este projeto demonstra como desacoplar produtores de informação (Publishers) de consumidores (Subscribers) através de um Broker central. Ele permite a transmissão de mensagens em tempo real e de forma eficiente, baseada em tópicos específicos.
 
+#Alunos : Edgar Lutterbach, Gabriel Ramalho, Henrique Couri e Vitto Baroni
+
 ## 🚀 Funcionalidades
 
 - **Streaming de Dados em Tempo Real**: Utiliza *Server Streaming* do gRPC para enviar notícias aos assinantes instantaneamente.
